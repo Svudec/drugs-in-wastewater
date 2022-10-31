@@ -11,3 +11,9 @@ Mjerenja su prikazana po prosječnoj količini određene supstance na dan u tjed
 
 Podatci su preuzeti od [Europskog centra za praćenje narkotika i ovisnosti o narkoticima](https://www.emcdda.europa.eu/)
 pod licencama [Creative Commons Attribution–ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/deed.hr) i [Creative Commons Attribution 4.0 International](https://creativecommons.org/licenses/by/4.0/deed.hr)
+
+Kao takvi mogu se koristiti neograničeno, čak uz izmjene i u komercijalne svrhe pod uvjetom da se navede autor i naznači licenca.
+
+Autor: Karlo Sudec
+Verzija skupa podataka: 1.0
+Jezik podataka: engleski
