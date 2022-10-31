@@ -17,3 +17,21 @@ Kao takvi mogu se koristiti neograničeno, čak uz izmjene i u komercijalne svrh
 Autor: Karlo Sudec  
 Verzija skupa podataka: 1.0  
 Jezik podataka: engleski  
+
+| Atribut | Opis |
+| --- | --- |
+| country_name | Naziv države |
+| country_code | Međunarodna oznaka države |
+| country_long_name | Puni naziv države |
+| city_name | Naziv grada |
+| institution_name | Naziv institucije |
+| institution_website | Link na web stranicu institucije |
+| location_name | Naziv mjerne lokacije |
+| location_population_size | Populacija vezana uz mjernu lokaciju |
+| location_latitude | Geografska širina mjerne lokacije |
+| location_longitude | Geografska dužina mjerne lokacije |
+| location_geom | Geometrijska reprezentacija pozicije lokacije |
+| measurement_year | Godina mjerenja |
+| measurement_dayofweek | Dan u tjednu |
+| measurement_value | Prosjek mjerenja sa zadanim parametrima |
+| metabolite_name | Naziv narkotika |
