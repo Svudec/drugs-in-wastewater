@@ -14,6 +14,6 @@ pod licencama [Creative Commons Attribution–ShareAlike 4.0 International](http
 
 Kao takvi mogu se koristiti neograničeno, čak uz izmjene i u komercijalne svrhe pod uvjetom da se navede autor i naznači licenca.
 
-Autor: Karlo Sudec
-Verzija skupa podataka: 1.0
-Jezik podataka: engleski
+Autor: Karlo Sudec  
+Verzija skupa podataka: 1.0  
+Jezik podataka: engleski  
