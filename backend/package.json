@@ -1,0 +1,14 @@
+{
+  "name": "drugs-in-wastewater",
+  "version": "1.0.0",
+  "description": "Backend app for dataset",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Karlo Sudec",
+  "license": "CC BY-SA 4.0",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
