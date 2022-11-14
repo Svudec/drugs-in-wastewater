@@ -1,8 +1,9 @@
 import './App.css';
-import { Typography, Space, Table, Tag, Select, Input, Button } from 'antd';
+import { Typography, Space, Table, Tag, Select, Input, Button, Tabs } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
 import NestedTable from './NestedTable';
 import Fuse from 'fuse.js';
+import About from './About';
 
 const { Title } = Typography;
 
@@ -62,15 +63,22 @@ function App() {
       <div className='header'>
         <Title>Prisutnost narkotika u otpadnim vodama nekih europskih gradova</Title>
       </div>
-      <div className='content'>
-        <div className='search-container'>
-          <Select value={filterSector} options={Object.values(filterSectors)} style={{width: '350px'}} onSelect={(v, option) => setFilterSector(option.value)}/>
-          <Input placeholder='Pretraga' value={searchString} onChange={(v) => setSearchString(v.target.value)}/>
-          <Button type='primary' onClick={search}>Traži</Button>
-          {searchResults && <Button type='secondary' onClick={() => setSearchResults(null)}>Reset filtera</Button>}
-        </div>
-        <NestedTable data={searchResults ? searchResults : data} />
-      </div>
+      <Tabs defaultActiveKey='1' destroyInactiveTabPane size='big'>
+        <Tabs.TabPane key={1} tab='O podacima'>
+          <About />
+        </Tabs.TabPane>
+        <Tabs.TabPane key={2} tab='Tablica'>
+          <div className='content'>
+            <div className='search-container'>
+              <Select value={filterSector} options={Object.values(filterSectors)} style={{ width: '350px' }} onSelect={(v, option) => setFilterSector(option.value)} />
+              <Input placeholder='Pretraga' value={searchString} onChange={(v) => setSearchString(v.target.value)} />
+              <Button type='primary' onClick={search}>Traži</Button>
+              {searchResults && <Button type='secondary' onClick={() => setSearchResults(null)}>Reset filtera</Button>}
+            </div>
+            <NestedTable data={searchResults ? searchResults : data} />
+          </div>
+        </Tabs.TabPane>
+      </Tabs>
     </div>
   );
 }
