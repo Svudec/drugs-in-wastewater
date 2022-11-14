@@ -53,7 +53,7 @@ function App() {
   const search = () => {
     const query = fusifySearchQuery(searchString)
 
-    const results = fuse.current?.search(query, { limit: 20 })
+    const results = fuse.current?.search(query)
     setSearchResults(results.map(r => r.item))
   }
 
