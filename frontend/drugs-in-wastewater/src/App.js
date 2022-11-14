@@ -1,90 +1,75 @@
 import './App.css';
-import { Typography, Space, Table, Tag } from 'antd';
+import { Typography, Space, Table, Tag, Select, Input, Button } from 'antd';
+import React, { useEffect, useState, useRef } from 'react';
 import NestedTable from './NestedTable';
+import Fuse from 'fuse.js';
 
 const { Title } = Typography;
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: text => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map(tag => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
+const filterSectors = {
+  'all': { value: 'all', label: 'Sva polja (wildcard)', keys: ['measurement_year', 'metabolite_name', "country_code", "country_name", "city_name", "location_population_size", "institution_name", "location_id", "location_name", "measurement_dayofweek", "measurement_value"] },
+  'measurement_year': { value: 'measurement_year', label: 'Godina mjerenja', keys: ['measurement_year'] },
+  'metabolite_name': { value: 'metabolite_name', label: 'Metabolit', keys: ['metabolite_name'] },
+  'country_code': { value: 'country_code', label: 'Kod države', keys: ['country_code'] },
+  'country_name': { value: 'country_name', label: 'Naziv države', keys: ['country_name'] },
+  'city_name': { value: 'city_name', label: 'Naziv grada', keys: ['city_name'] },
+  'location_population_size': { value: 'location_population_size', label: 'Populacija', keys: ['location_population_size'] },
+  'institution_name': { value: 'institution_name', label: 'Naziv institucije', keys: ['institution_name'] },
+  'location_id': { value: 'location_id', label: 'Id mjernog mjesta', keys: ['location_id'] },
+  'location_name': { value: 'location_name', label: 'Naziv mjernog mjesta', keys: ['location_name'] },
+  'measurement_dayofweek': { value: 'measurement_dayofweek', label: 'Dan u tjednu', keys: ['measurement_dayofweek'] },
+  'measurement_value': { value: 'measurement_value', label: 'Koncentracija metaboilita', keys: ['measurement_value'] }
+}
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-];
+const fusifySearchQuery = searchQuery => searchQuery.split(' ').reduce((accum, el) => accum + ` '${el}`, '')
 
 function App() {
+
+  const [data, setData] = useState([])
+  const [searchResults, setSearchResults] = useState(null)
+  const [filterSector, setFilterSector] = useState('all')
+  const [searchString, setSearchString] = useState('')
+  const fuse = useRef(null)
+
+  useEffect(() => {
+    fetch('http://localhost:8400/').then(res => res.json().then(parsed => setData(parsed)))
+  }, [])
+
+  useEffect(() => {
+    fuse.current = new Fuse(data, {
+      shouldSort: true,
+      findAllMatches: false,
+      ignoreLocation: true,
+      location: 0,
+      distance: 100,
+      minMatchCharLength: 2,
+      threshold: 0.3,
+      useExtendedSearch: true,
+      keys: filterSectors[filterSector].keys
+    })
+
+  }, [data, filterSector])
+
+  const search = () => {
+    const query = fusifySearchQuery(searchString)
+
+    const results = fuse.current?.search(query, { limit: 20 })
+    setSearchResults(results.map(r => r.item))
+  }
+
   return (
     <div className="container">
       <div className='header'>
         <Title>Prisutnost narkotika u otpadnim vodama nekih europskih gradova</Title>
       </div>
       <div className='content'>
-        <NestedTable/>
+        <div className='search-container'>
+          <Select value={filterSector} options={Object.values(filterSectors)} style={{width: '350px'}} onSelect={(v, option) => setFilterSector(option.value)}/>
+          <Input placeholder='Pretraga' value={searchString} onChange={(v) => setSearchString(v.target.value)}/>
+          <Button type='primary' onClick={search}>Traži</Button>
+          {searchResults && <Button type='secondary' onClick={() => setSearchResults(null)}>Reset filtera</Button>}
+        </div>
+        <NestedTable data={searchResults ? searchResults : data} />
       </div>
     </div>
   );

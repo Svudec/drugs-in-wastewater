@@ -32,7 +32,7 @@ from
      join country c2 on c.country_id = c2.country_code
      join institution i on l.institution_id = i.id
 order by measurement_year DESC, metabolite_name, country_name,
-         city_name, institution_name, location_population_size DESC, measurement_dayofweek limit 10`
+         city_name, institution_name, location_population_size DESC, measurement_dayofweek`
 
 const getTable = (request, response) => {
     pool.query(baseQuery, (error, results) => {

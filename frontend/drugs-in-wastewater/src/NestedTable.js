@@ -3,15 +3,9 @@ import React, { useEffect, useState } from 'react';
 import './nestedTable.css';
 const { Column, ColumnGroup } = Table;
 
-const NestedTable = () => {
+const NestedTable = (props) => {
 
-  const [data, setData] = useState()
-
-  useEffect(() => {
-    fetch('http://localhost:8400/').then(res => res.json().then(ent => setData(ent)))
-  }, [])
-
-  return <Table dataSource={data}>
+  return <Table dataSource={props.data || []} pagination={{pageSizeOptions: [10, 20, 50, 100]}}>
     <Column title="Godina" dataIndex='measurement_year' key='measurement_year' />
     <Column title="Metabolit" dataIndex='metabolite_name' key='metabolite_name' />
     <ColumnGroup title="Država">
