@@ -1,5 +1,6 @@
 import './App.css';
 import { Typography, Space, Table, Tag } from 'antd';
+import NestedTable from './NestedTable';
 
 const { Title } = Typography;
 
@@ -83,7 +84,7 @@ function App() {
         <Title>Prisutnost narkotika u otpadnim vodama nekih europskih gradova</Title>
       </div>
       <div className='content'>
-        <Table columns={columns} dataSource={data} />
+        <NestedTable/>
       </div>
     </div>
   );
