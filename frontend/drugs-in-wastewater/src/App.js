@@ -4,6 +4,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import NestedTable from './NestedTable';
 import Fuse from 'fuse.js';
 import About from './About';
+import { CSVLink } from 'react-csv';
 
 const { Title } = Typography;
 
@@ -62,7 +63,7 @@ function App() {
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(searchResults || data))}`;
     const link = document.createElement("a");
     link.href = jsonString;
-    link.download = "data.json";
+    link.download = "drugs_in_wastewater.json";
 
     link.click();
   };
@@ -84,6 +85,7 @@ function App() {
               <Button type='primary' onClick={search}>Traži</Button>
               {searchResults && <Button type='secondary' onClick={() => setSearchResults(null)}>Reset filtera</Button>}
               <Button type='primary' onClick={exportData}>Preuzmi JSON</Button>
+              <CSVLink data={searchResults || data} filename='drugs_in_wastewater'>Preuzmi CSV</CSVLink>
             </div>
             <NestedTable data={searchResults ? searchResults : data} />
           </div>
