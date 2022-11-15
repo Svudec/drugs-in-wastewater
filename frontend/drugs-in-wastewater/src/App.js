@@ -85,7 +85,7 @@ function App() {
               <Button type='primary' onClick={search}>Traži</Button>
               {searchResults && <Button type='secondary' onClick={() => setSearchResults(null)}>Reset filtera</Button>}
               <Button type='primary' onClick={exportData}>Preuzmi JSON</Button>
-              <CSVLink data={searchResults || data} filename='drugs_in_wastewater'>Preuzmi CSV</CSVLink>
+              {/* <CSVLink data={searchResults || data} filename='drugs_in_wastewater'>Preuzmi CSV</CSVLink> */}
             </div>
             <NestedTable data={searchResults ? searchResults : data} />
           </div>
