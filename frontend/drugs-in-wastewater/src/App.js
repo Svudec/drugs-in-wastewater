@@ -1,5 +1,5 @@
 import './App.css';
-import { Typography, Space, Table, Tag, Select, Input, Button, Tabs } from 'antd';
+import { Typography, Select, Input, Button, Tabs } from 'antd';
 import React, { useEffect, useState, useRef } from 'react';
 import NestedTable from './NestedTable';
 import Fuse from 'fuse.js';
