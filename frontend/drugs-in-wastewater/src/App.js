@@ -58,6 +58,15 @@ function App() {
     setSearchResults(results.map(r => r.item))
   }
 
+  const exportData = () => {
+    const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(JSON.stringify(searchResults || data))}`;
+    const link = document.createElement("a");
+    link.href = jsonString;
+    link.download = "data.json";
+
+    link.click();
+  };
+
   return (
     <div className="container">
       <div className='header'>
@@ -74,9 +83,16 @@ function App() {
               <Input placeholder='Pretraga' value={searchString} onChange={(v) => setSearchString(v.target.value)} />
               <Button type='primary' onClick={search}>Traži</Button>
               {searchResults && <Button type='secondary' onClick={() => setSearchResults(null)}>Reset filtera</Button>}
+              <Button type='primary' onClick={exportData}>Preuzmi JSON</Button>
             </div>
             <NestedTable data={searchResults ? searchResults : data} />
           </div>
+        </Tabs.TabPane>
+        <Tabs.TabPane key={3} tab={'Strojno čitljivo'}>
+        <div className='content'>
+          <a href='/drugs-in-wastewater.csv' download>CSV datoteka</a>
+          <a href='/drugs-in-wastewater.json' download>JSON datoteka</a>
+        </div>
         </Tabs.TabPane>
       </Tabs>
     </div>

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Narkotici u kanalizaciji",
+  "name": "Prisutnost narkotika u otpadnim vodama",
   "icons": [
     {
       "src": "favicon.ico",
