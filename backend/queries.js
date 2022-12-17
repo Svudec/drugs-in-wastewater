@@ -8,7 +8,18 @@ const pool = new Pool({
     port: 5432,
 })
 
-const baseQuery = `select year measurement_year,
+const executeQuery = (query) => {
+    return (request, response) => {
+        pool.query(query, (error, results) => {
+            if (error) {
+                response.status(500).json({message: "Moj error"})
+            }
+            response.status(200).json(results.rows)
+        })
+    }
+}
+
+const getAll = `select year measurement_year,
 m.name metabolite_name,
 country_code,
 c2.name country_name,
@@ -34,15 +45,6 @@ from
 order by measurement_year DESC, metabolite_name, country_name,
          city_name, institution_name, location_population_size DESC, measurement_dayofweek`
 
-const getTable = (request, response) => {
-    pool.query(baseQuery, (error, results) => {
-        if (error) {
-            throw error
-        }
-        response.status(200).json(results.rows)
-    })
-}
-
-module.exports = {
-    getTable
+module.exports={
+    executeQuery, getAll
 }
