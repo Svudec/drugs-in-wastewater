@@ -18,8 +18,8 @@ const getAvgValues = (metaboliteId, year) => ({
         join country c2
             on c.country_id = c2.country_code
         group by c2.country_code, c2.name, c2.long_name
-        order by value desc`, 
-        values: [metaboliteId].concat(year ? [year] : [])
+        order by value desc`,
+    values: [metaboliteId].concat(year ? [year] : [])
 })
 
 router.route('/avg-by-country/:id').get(async (req, res) => {
