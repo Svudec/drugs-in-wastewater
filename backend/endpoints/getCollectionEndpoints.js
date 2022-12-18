@@ -2,7 +2,9 @@ const { Router } = require('express')
 const { executeQuery } = require('../queries')
 const router = Router()
 
-const getCollection = `select year measurement_year,
+const getCollection = `select 
+me.id measurement_id,
+year measurement_year,
 m.name metabolite_name,
 country_code,
 c2.name country_name,
