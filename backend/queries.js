@@ -34,11 +34,39 @@ const executeQuery = (query, returnOnlyFirst = false) =>
 const sendResponseGet = (queryResult, responseObject) => {
     if (queryResult.status === 'error') {
         responseObject.status(queryResult.httpStatus)
-        .json({ ...queryResult, message: queryResult.httpStatus === 404 ? 'Requested resource not found!' : queryResult.message })
+            .json({ ...queryResult, message: queryResult.httpStatus === 404 ? 'Requested resource not found!' : queryResult.message })
     } else {
         responseObject.status(200)
-        .json({ ...queryResult, message: 'Requested resource fetched successfully' })
+            .json({ ...queryResult, message: 'Requested resource fetched successfully' })
     }
+}
+
+const writeQuery = (query) =>
+    new Promise((resolve, reject) => {
+        let result = {}
+
+        pool.query(query)
+            .then(res => {
+                if (['INSERT', 'UPDATE', 'DELETE'].includes(res.command) && res.rowCount > 0) {
+                    result.status = 'ok'
+                    result.res = []
+                } else {
+                    result.status = 'error'
+                    result.httpStatus = 400
+                    result.message = "Unable to execute write operation!"
+                }
+                resolve(result)
+            })
+            .catch(e => {
+                result.status = 'error'
+                result.httpStatus = 400
+                result.message = e.message
+                resolve(result)
+            })
+    });
+
+const sendResponseWrite = (queryResult, responseObject) => {
+    responseObject.status(200).json({ ...queryResult, message: 'Write operation successfull' })
 }
 
 const getAllQuery = (resource) => `select * from ${resource}`
@@ -46,22 +74,22 @@ const getByIdQuery = (resource, id) => ({
     text: `select * from ${resource} where id = $1`, values: [id]
 })
 
-const getAll = (resource) =>{
+const getAll = (resource) => {
     return async (req, res) => {
         const queryRes = await executeQuery(getAllQuery(resource))
         sendResponseGet(queryRes, res)
     }
 }
 
-const getById = (resource) =>{
+const getById = (resource, fromWriteFn = false) => {
     return async (req, res) => {
         const queryRes = await executeQuery(getByIdQuery(resource, req.params.id), true)
-        sendResponseGet(queryRes, res)
+        fromWriteFn ? sendResponseWrite(queryRes, res) : sendResponseGet(queryRes, res)
     }
 }
 
 
 
 module.exports = {
-    executeQuery, sendResponseGet, getAll, getById
+    executeQuery, writeQuery, sendResponseGet, getAll, getById
 }

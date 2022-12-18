@@ -46,7 +46,8 @@ CREATE TABLE measurement(
     metabolite_id INTEGER,
     location_id VARCHAR,
     dayOfWeek dayOfWeek,
-    value FLOAT
+    value FLOAT,
+    UNIQUE(year, metabolite_id, location_id, dayOfWeek)
 );
 ALTER TABLE measurement ADD CONSTRAINT measure_metabolite_FK FOREIGN KEY(metabolite_id) REFERENCES metabolite;
 ALTER TABLE measurement ADD CONSTRAINT measure_location_FK FOREIGN KEY(location_id) REFERENCES location;
