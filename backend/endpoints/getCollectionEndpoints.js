@@ -1,8 +1,8 @@
 const { Router } = require('express')
-const {executeQuery} = require('../queries')
+const { executeQuery } = require('../queries')
 const router = Router()
 
-const getAll = `select year measurement_year,
+const getCollection = `select year measurement_year,
 m.name metabolite_name,
 country_code,
 c2.name country_name,
@@ -27,9 +27,18 @@ from
      join institution i on l.institution_id = i.id
 order by measurement_year DESC, metabolite_name, country_name,
          city_name, institution_name, location_population_size DESC, measurement_dayofweek`
-         
-         
-router.route('/').get(executeQuery(getAll))
-module.exports={
+
+
+router.route('/').get(async (req, res) => {
+    const queryRes = await executeQuery(getCollection)
+
+    if (queryRes.status === 'error') {
+        res.status(500).json({ message: "Moj error" })
+    } else {
+        res.status(200).json(queryRes.res)
+    }
+})
+
+module.exports = {
     default: router
 }

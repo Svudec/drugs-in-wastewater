@@ -8,17 +8,23 @@ const pool = new Pool({
     port: 5432,
 })
 
-const executeQuery = (query) => {
-    return (request, response) => {
-        pool.query(query, (error, results) => {
-            if (error) {
-                response.status(500).json({message: "Moj error"})
-            }
-            response.status(200).json(results.rows)
-        })
-    }
-}
+const executeQuery = (query) =>
+    new Promise((resolve, reject) => {
+        let result = {}
 
-module.exports={
+        pool.query(query)
+            .then(res => {
+                result.status = 'success'
+                result.res = res.rows
+                resolve(result)
+            })
+            .catch(e => {
+                result.status = 'error'
+                result.reason = e
+                reject(result)
+            })
+    });
+
+module.exports = {
     executeQuery
 }

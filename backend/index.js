@@ -1,11 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const legacy = require('./endpoints/getAllEndpoints').default
 
 const app = express()
 const port = 8400
 const resources = [
+    { name: 'collection', fn: require('./endpoints/getCollectionEndpoints').default },
     { name: 'city', fn: require('./endpoints/cityEndpoints').default },
     { name: 'country', fn: require('./endpoints/countryEndpoints').default },
     { name: 'institution', fn: require('./endpoints/institutionEndpoints').default },
@@ -22,8 +22,6 @@ app.use(
         extended: true,
     })
 )
-
-app.use('/', legacy)
 
 resources.forEach(res => app.use(`/api/v1/${res.name}/`, res.fn))
 
