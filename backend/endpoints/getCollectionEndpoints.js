@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { executeQuery } = require('../queries')
+const { executeQuery, sendResponseGet } = require('../queries')
 const router = Router()
 
 const getCollection = `select 
@@ -33,12 +33,7 @@ order by measurement_year DESC, metabolite_name, country_name,
 
 router.route('/').get(async (req, res) => {
     const queryRes = await executeQuery(getCollection)
-
-    if (queryRes.status === 'error') {
-        res.status(500).json({ message: "Moj error" })
-    } else {
-        res.status(200).json(queryRes.res)
-    }
+    sendResponseGet(queryRes, res)
 })
 
 module.exports = {

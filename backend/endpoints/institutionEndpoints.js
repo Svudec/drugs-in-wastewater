@@ -1,8 +1,11 @@
 const { Router } = require('express')
-const {executeQuery, getAll} = require('../queries')
+const { executeQuery, sendResponseGet, getAll, getById } = require('../queries')
 const router = Router()
 
+router.route('/').get(getAll('institution'))
 
-module.exports={
+router.route('/:id').get(getById('institution'))
+
+module.exports = {
     default: router
 }

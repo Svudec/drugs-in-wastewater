@@ -25,6 +25,11 @@ app.use(
 
 resources.forEach(res => app.use(`/api/v1/${res.name}/`, res.fn))
 
+//handle non existant endpoints
+app.use((req, res, next) => {
+    res.status(501).json({ status: "Not implemented", message: "Method for requested resource not implemented!" });
+});
+
 app.listen(port, () => {
     console.log(`Backend running on port ${port}.`)
 })
