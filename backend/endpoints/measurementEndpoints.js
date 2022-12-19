@@ -25,9 +25,9 @@ const updateMeasurement = (oldM, newM) => {
     return out
 }
 
-router.route('/').get(getAll('measurement'))
+const deleteMeasurement = (id) => ({ text: "delete from measurement where id = $1", values: [id] })
 
-router.route('/:id').get(getById('measurement'))
+router.route('/').get(getAll('measurement'))
 
 router.route('/').post(async (req, res) => {
     const lastIdQ = await executeQuery(getMaxId, true)
@@ -41,6 +41,24 @@ router.route('/').post(async (req, res) => {
     const fakeReq = { params: { id: newId } }
     const getFn = getById('measurement', true)
     getFn(fakeReq, res)
+})
+
+router.route('/:id').get(getById('measurement'))
+
+router.route('/:id').delete(async (req, res) => {
+    const existing = await executeQuery(getByIdQuery('measurement', req.params.id), true)
+    if (existing.status === 'error') {
+        res.status(existing.httpStatus)
+            .json({ ...existing, message: existing.httpStatus === 404 ? 'Requested resource not found!' : existing.message })
+    }
+
+    const deleteQ = await writeQuery(deleteMeasurement(existing.res.id))
+
+    if (deleteQ.status === 'error') {
+        res.status(deleteQ.httpStatus).json(deleteQ)
+    } else {
+        res.status(200).json({ ...deleteQ, message: 'Resource deleted successfully' })
+    }
 })
 
 router.route('/:id').put(async (req, res) => {
