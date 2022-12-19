@@ -1,264 +1,658 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-      "title": "Drugs in Wastewater REST API",
-      "description": "REST API exposing the data from here: https://github.com/Svudec/drugs-in-wastewater/blob/master/README.md",
-      "version": "1.0.0",
-      "license": {
-        "name": "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)",
-        "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
-      },
-      "contact":{
-        "name": "Karlo Sudec",
-        "url": "https://github.com/Svudec",
-        "email": "karlo.sudec@fer.hr"
-      }
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Drugs in Wastewater REST API",
+    "description": "REST API exposing the data from https://github.com/Svudec/drugs-in-wastewater/blob/master/README.md",
+    "version": "1.0.0",
+    "license": {
+      "name": "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
     },
-    "servers": [
-      {
-        "url": "http://localhost:3000/"
-      }
-    ],
-    "paths": {
-      "/api/v1/collection": {
-        "get": {
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            }
-          }
-        }
-      },
-      "/api/v1/city": {
-        "get": {}
-      },
-      "/api/v1/city/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        }
-      },
-      "/api/v1/country": {
-        "get": {}
-      },
-      "/api/v1/country/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        }
-      },
-      "/api/v1/country/top-days/{id}/{metaboliteId}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "metaboliteId",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            }
-          }
-        }
-      },
-      "/api/v1/institution": {
-        "get": {}
-      },
-      "/api/v1/institution/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        }
-      },
-      "/api/v1/location": {
-        "get": {}
-      },
-      "/api/v1/location/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        }
-      },
-      "/api/v1/location/by-country/{countryCode}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "countryCode",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            }
-          }
-        }
-      },
-      "/api/v1/measurement": {
-        "get": {},
-        "post": {}
-      },
-      "/api/v1/measurement/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        },
-        "put": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        },
-        "delete": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            }
-          }
-        }
-      },
-      "/api/v1/metabolite": {
-        "get": {}
-      },
-      "/api/v1/metabolite/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ]
-        }
-      },
-      "/api/v1/metabolite/avg-by-country/{id}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            }
-          }
-        }
-      },
-      "/api/v1/metabolite/avg-by-country/{id}/{year}": {
-        "get": {
-          "parameters": [
-            {
-              "name": "id",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "year",
-              "in": "path",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK",
-              "content": {}
-            }
+    "contact": {
+      "name": "Karlo Sudec",
+      "url": "https://github.com/Svudec",
+      "email": "karlo.sudec@fer.hr"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "paths": {
+    "/api/v1/collection": {
+      "get": {
+        "summary": "Get whole database (legacy)",
+        "description": "Returns all resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
           }
         }
       }
     },
-    "components": {}
-  }
+    "/api/v1/city": {
+      "get": {
+        "summary": "Get all resources from collection",
+        "description": "Returns all collection resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      }
+    },
+    "/api/v1/city/{id}": {
+      "get": {
+        "summary": "Get resource from collection by ID",
+        "description": "Returns a single resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/country": {
+      "get": {
+        "summary": "Get all resources from collection",
+        "description": "Returns all collection resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      }
+    },
+    "/api/v1/country/{id}": {
+      "get": {
+        "summary": "Get resource from collection by ID",
+        "description": "Returns a single resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/country/top-days/{id}/{metaboliteId}": {
+      "get": {
+        "summary": "Get average metabolite readings per days of week in country with {id}",
+        "description": "Returns average readings per days of week in selected country",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "metaboliteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/institution": {
+      "get": {
+        "summary": "Get all resources from collection",
+        "description": "Returns all collection resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      }
+    },
+    "/api/v1/institution/{id}": {
+      "get": {
+        "summary": "Get resource from collection by ID",
+        "description": "Returns a single resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/location": {
+      "get": {
+        "summary": "Get all resources from collection",
+        "description": "Returns all collection resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      }
+    },
+    "/api/v1/location/{id}": {
+      "get": {
+        "summary": "Get resource from collection by ID",
+        "description": "Returns a single resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/location/by-country/{countryCode}": {
+      "get": {
+        "summary": "Get all locations in country with {countryCode}",
+        "description": "Returns a list of resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/measurement": {
+      "get": {
+        "summary": "Get all resources from collection",
+        "description": "Returns all collection resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      },
+      "post": {
+        "summary": "Create resource in collection",
+        "description": "Returns a created resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "year",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "metabolite_id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dayofweek",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Write operation successfull",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      }
+    },
+    "/api/v1/measurement/{id}": {
+      "get": {
+        "summary": "Get resource from collection by ID",
+        "description": "Returns a single resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update resource from collection with {id}",
+        "description": "Returns an updated resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "metabolite_id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dayofweek",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "value",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Write operation successfull",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete resource from collection with {id}",
+        "description": "Returns status of requested action",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ok",
+            "message": "Resource deleted successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/metabolite": {
+      "get": {
+        "summary": "Get all resources from collection",
+        "description": "Returns all collection resources from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": []
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          }
+        }
+      }
+    },
+    "/api/v1/metabolite/{id}": {
+      "get": {
+        "summary": "Get resource from collection by ID",
+        "description": "Returns a single resource from the database",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    },
+    "/api/v1/metabolite/avg-by-country/{id}/{year}": {
+      "get": {
+        "summary": "Get average readings per metabolite in country with {id} in {year}",
+        "description": "Returns average readings per metabolite in selected country in selected year or whole time if year is not given",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "year",
+            "in": "path",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "status": "ok",
+            "message": "Requested resource fetched successfully",
+            "res": {}
+          },
+          "400": {
+            "status": "error",
+            "message": "Error reason: ..."
+          },
+          "404": {
+            "status": "error",
+            "message": "Requested resource not found!"
+          }
+        }
+      }
+    }
+  },
+  "components": {}
+}

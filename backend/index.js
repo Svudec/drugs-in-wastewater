@@ -28,7 +28,7 @@ app.use(
 
 
 resources.forEach(res => app.use(res))
-//app.use(require('./endpoints/getCollectionEndpoints').default)
+
 app.get('/swagger', swaggerUi.setup(swaggerFile));
 app.use('/swagger', swaggerUi.serve);
 
