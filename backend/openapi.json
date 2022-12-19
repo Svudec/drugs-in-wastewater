@@ -1,0 +1,264 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "Drugs in Wastewater REST API",
+      "description": "REST API exposing the data from here: https://github.com/Svudec/drugs-in-wastewater/blob/master/README.md",
+      "version": "1.0.0",
+      "license": {
+        "name": "Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)",
+        "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
+      },
+      "contact":{
+        "name": "Karlo Sudec",
+        "url": "https://github.com/Svudec",
+        "email": "karlo.sudec@fer.hr"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:3000/"
+      }
+    ],
+    "paths": {
+      "/api/v1/collection": {
+        "get": {
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/api/v1/city": {
+        "get": {}
+      },
+      "/api/v1/city/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/v1/country": {
+        "get": {}
+      },
+      "/api/v1/country/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/v1/country/top-days/{id}/{metaboliteId}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "metaboliteId",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/api/v1/institution": {
+        "get": {}
+      },
+      "/api/v1/institution/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/v1/location": {
+        "get": {}
+      },
+      "/api/v1/location/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/v1/location/by-country/{countryCode}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "countryCode",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/api/v1/measurement": {
+        "get": {},
+        "post": {}
+      },
+      "/api/v1/measurement/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "put": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "delete": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/api/v1/metabolite": {
+        "get": {}
+      },
+      "/api/v1/metabolite/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/v1/metabolite/avg-by-country/{id}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/api/v1/metabolite/avg-by-country/{id}/{year}": {
+        "get": {
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "year",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+      }
+    },
+    "components": {}
+  }

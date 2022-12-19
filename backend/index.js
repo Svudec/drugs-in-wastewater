@@ -1,6 +1,7 @@
 const express = require('express')
 const swaggerUi = require('swagger-ui-express')
 const swaggerFile = require('./swagger_output.json')
+const openApiFile = require('./openapi.json')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
@@ -28,8 +29,11 @@ app.use(
 
 resources.forEach(res => app.use(res))
 //app.use(require('./endpoints/getCollectionEndpoints').default)
-app.get('/api-docs', swaggerUi.setup(swaggerFile));
-app.use('/api-docs', swaggerUi.serve);
+app.get('/swagger', swaggerUi.setup(swaggerFile));
+app.use('/swagger', swaggerUi.serve);
+
+app.get('/open-api', (req, res) => {res.status(200).json(openApiFile)})
+
 
 //handle non existant endpoints
 app.use((req, res, next) => {
