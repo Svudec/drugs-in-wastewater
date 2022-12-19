@@ -42,9 +42,9 @@ ALTER TABLE location ADD CONSTRAINT location_institution_FK FOREIGN KEY(institut
 
 CREATE TABLE measurement(
     id INTEGER PRIMARY KEY,
-    year INTEGER CHECK ( year > 1800 ),
-    metabolite_id INTEGER,
-    location_id VARCHAR,
+    year INTEGER CHECK ( year > 1800 ) NOT NULL,
+    metabolite_id INTEGER NOT NULL,
+    location_id VARCHAR NOT NULL,
     dayOfWeek dayOfWeek,
     value FLOAT,
     UNIQUE(year, metabolite_id, location_id, dayOfWeek)

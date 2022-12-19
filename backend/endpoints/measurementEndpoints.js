@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { executeQuery, getAll, getById, writeQuery } = require('../queries')
+const { executeQuery, getAll, getById, writeQuery, getByIdQuery } = require('../queries')
 const router = Router()
 
 router.route('/').get(getAll('measurement'))
@@ -8,18 +8,29 @@ router.route('/:id').get(getById('measurement'))
 
 const getMaxId = 'select max(id) last from measurement'
 
-const addMeasurement = (id, year, metaboliteId, locationId, dayOfWeek, value) => ({
+const addMeasurement = (o) => ({
     text: `INSERT INTO measurement(id, year, metabolite_id, location_id, dayOfWeek, value) VALUES
     ($1, $2, $3, $4, $5, $6)`,
-    values: [id, year, metaboliteId, locationId, dayOfWeek, value]
+    values: [o.id, o.year, o.metabolite_id, o.location_id, o.dayofweek, o.value]
 })
+
+const updateMeasurement = (oldM, newM) => {
+    let i = 0
+    const out = {
+        text: `update measurement set 
+    ${Object.keys(newM).filter(a => a !== 'id').map(a => { i += 1; return a + '=$' + i }).join(',')}
+    where id = ${oldM.id}`,
+        values: Object.keys(newM).filter(a => a !== 'id').map(a => newM[a])
+    }
+    console.log(out)
+    return out
+}
 
 router.route('/').post(async (req, res) => {
     const lastIdQ = await executeQuery(getMaxId, true)
     const newId = lastIdQ.res.last + 1
-    const b = req.body
 
-    const addQ = await writeQuery(addMeasurement(newId, b.year, b.metaboliteId, b.locationId, b.dayOfWeek, b.value))
+    const addQ = await writeQuery(addMeasurement({ ...req.body, id: newId }))
 
     if (addQ.status === 'error') {
         res.status(addQ.httpStatus).json(addQ)
@@ -27,6 +38,22 @@ router.route('/').post(async (req, res) => {
     const fakeReq = { params: { id: newId } }
     const getFn = getById('measurement', true)
     getFn(fakeReq, res)
+})
+
+router.route('/:id').put(async (req, res) => {
+    const existing = await executeQuery(getByIdQuery('measurement', req.params.id), true)
+    if(existing.status === 'error'){
+        res.status(existing.httpStatus)
+            .json({ ...existing, message: existing.httpStatus === 404 ? 'Requested resource not found!' : existing.message })
+    }
+
+    const updateQ = await writeQuery(updateMeasurement(existing.res, req.body))
+
+    if (updateQ.status === 'error') {
+        res.status(updateQ.httpStatus).json(updateQ)
+    }
+    const getFn = getById('measurement', true)
+    getFn(req, res)
 })
 
 module.exports = {

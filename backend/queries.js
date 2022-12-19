@@ -91,5 +91,5 @@ const getById = (resource, fromWriteFn = false) => {
 
 
 module.exports = {
-    executeQuery, writeQuery, sendResponseGet, getAll, getById
+    executeQuery, writeQuery, sendResponseGet, getAll, getById, getByIdQuery
 }
