@@ -22,9 +22,12 @@ const updateMeasurement = (oldM, newM) => {
     where id = ${oldM.id}`,
         values: Object.keys(newM).filter(a => a !== 'id').map(a => newM[a])
     }
-    console.log(out)
     return out
 }
+
+router.route('/').get(getAll('measurement'))
+
+router.route('/:id').get(getById('measurement'))
 
 router.route('/').post(async (req, res) => {
     const lastIdQ = await executeQuery(getMaxId, true)
@@ -42,7 +45,7 @@ router.route('/').post(async (req, res) => {
 
 router.route('/:id').put(async (req, res) => {
     const existing = await executeQuery(getByIdQuery('measurement', req.params.id), true)
-    if(existing.status === 'error'){
+    if (existing.status === 'error') {
         res.status(existing.httpStatus)
             .json({ ...existing, message: existing.httpStatus === 404 ? 'Requested resource not found!' : existing.message })
     }
