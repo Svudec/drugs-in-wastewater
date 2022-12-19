@@ -1,17 +1,19 @@
 const express = require('express')
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const app = express()
 const port = 8400
 const resources = [
-    { name: 'collection', fn: require('./endpoints/getCollectionEndpoints').default },
-    { name: 'city', fn: require('./endpoints/cityEndpoints').default },
-    { name: 'country', fn: require('./endpoints/countryEndpoints').default },
-    { name: 'institution', fn: require('./endpoints/institutionEndpoints').default },
-    { name: 'location', fn: require('./endpoints/locationEndpoints').default },
-    { name: 'measurement', fn: require('./endpoints/measurementEndpoints').default },
-    { name: 'metabolite', fn: require('./endpoints/metaboliteEndpoints').default }
+    require('./endpoints/getCollectionEndpoints').default,
+    require('./endpoints/cityEndpoints').default,
+    require('./endpoints/countryEndpoints').default,
+    require('./endpoints/institutionEndpoints').default,
+    require('./endpoints/locationEndpoints').default,
+    require('./endpoints/measurementEndpoints').default,
+    require('./endpoints/metaboliteEndpoints').default
 ]
 
 app.use(cors())
@@ -23,7 +25,11 @@ app.use(
     })
 )
 
-resources.forEach(res => app.use(`/api/v1/${res.name}/`, res.fn))
+
+resources.forEach(res => app.use(res))
+//app.use(require('./endpoints/getCollectionEndpoints').default)
+app.get('/api-docs', swaggerUi.setup(swaggerFile));
+app.use('/api-docs', swaggerUi.serve);
 
 //handle non existant endpoints
 app.use((req, res, next) => {

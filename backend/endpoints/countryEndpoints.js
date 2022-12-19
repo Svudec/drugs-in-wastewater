@@ -2,10 +2,6 @@ const { Router } = require('express')
 const { executeQuery, sendResponseGet, getAll, getById } = require('../queries')
 const router = Router()
 
-router.route('/').get(getAll('country'))
-
-router.route('/:id').get(getById('country'))
-
 const getAvgValues = (countryId, metaboliteId) => ({
     text: `select dayofweek, avg(value) value
     from measurement m
@@ -22,7 +18,11 @@ const getAvgValues = (countryId, metaboliteId) => ({
     values: [countryId, metaboliteId]
 })
 
-router.route('/top-days/:id/:metaboliteId').get(async (req, res) => {
+router.route(`/api/v1/country`).get(getAll('country'))
+
+router.route(`/api/v1/country/:id`).get(getById('country'))
+
+router.route(`/api/v1/country/top-days/:id/:metaboliteId`).get(async (req, res) => {
     const queryRes = await executeQuery(getAvgValues(req.params.id, req.params.metaboliteId))
     sendResponseGet(queryRes, res)
 })

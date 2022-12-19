@@ -2,10 +2,6 @@ const { Router } = require('express')
 const { executeQuery, sendResponseGet, getAll, getById } = require('../queries')
 const router = Router()
 
-router.route('/').get(getAll('location'))
-
-router.route('/:id').get(getById('location'))
-
 const getAllByCountryCode = (countryCode) => ({
     text: `select l.* 
     from location l 
@@ -15,7 +11,11 @@ const getAllByCountryCode = (countryCode) => ({
         values: [countryCode]
 })
 
-router.route('/by-country/:countryCode').get(async (req, res) => {
+router.route(`/api/v1/location`).get(getAll('location'))
+
+router.route(`/api/v1/location/:id`).get(getById('location'))
+
+router.route(`/api/v1/location/by-country/:countryCode`).get(async (req, res) => {
     const queryRes = await executeQuery(getAllByCountryCode(req.params.countryCode))
     sendResponseGet(queryRes, res)
 })

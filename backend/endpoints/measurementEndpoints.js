@@ -2,10 +2,6 @@ const { Router } = require('express')
 const { executeQuery, getAll, getById, writeQuery, getByIdQuery } = require('../queries')
 const router = Router()
 
-router.route('/').get(getAll('measurement'))
-
-router.route('/:id').get(getById('measurement'))
-
 const getMaxId = 'select max(id) last from measurement'
 
 const addMeasurement = (o) => ({
@@ -27,9 +23,9 @@ const updateMeasurement = (oldM, newM) => {
 
 const deleteMeasurement = (id) => ({ text: "delete from measurement where id = $1", values: [id] })
 
-router.route('/').get(getAll('measurement'))
+router.route(`/api/v1/measurement`).get(getAll('measurement'))
 
-router.route('/').post(async (req, res) => {
+router.route(`/api/v1/measurement`).post(async (req, res) => {
     const lastIdQ = await executeQuery(getMaxId, true)
     const newId = lastIdQ.res.last + 1
 
@@ -43,9 +39,9 @@ router.route('/').post(async (req, res) => {
     getFn(fakeReq, res)
 })
 
-router.route('/:id').get(getById('measurement'))
+router.route(`/api/v1/measurement/:id`).get(getById('measurement'))
 
-router.route('/:id').delete(async (req, res) => {
+router.route(`/api/v1/measurement/:id`).delete(async (req, res) => {
     const existing = await executeQuery(getByIdQuery('measurement', req.params.id), true)
     if (existing.status === 'error') {
         res.status(existing.httpStatus)
@@ -61,7 +57,7 @@ router.route('/:id').delete(async (req, res) => {
     }
 })
 
-router.route('/:id').put(async (req, res) => {
+router.route(`/api/v1/measurement/:id`).put(async (req, res) => {
     const existing = await executeQuery(getByIdQuery('measurement', req.params.id), true)
     if (existing.status === 'error') {
         res.status(existing.httpStatus)

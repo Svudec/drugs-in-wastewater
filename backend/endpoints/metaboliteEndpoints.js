@@ -2,10 +2,6 @@ const { Router } = require('express')
 const { executeQuery, sendResponseGet, getAll, getById } = require('../queries')
 const router = Router()
 
-router.route('/').get(getAll('metabolite'))
-
-router.route('/:id').get(getById('metabolite'))
-
 const getAvgValues = (metaboliteId, year) => ({
     text: `select c2.*, avg(value) value
     from measurement m
@@ -22,12 +18,16 @@ const getAvgValues = (metaboliteId, year) => ({
     values: [metaboliteId].concat(year ? [year] : [])
 })
 
-router.route('/avg-by-country/:id').get(async (req, res) => {
+router.route(`/api/v1/metabolite`).get(getAll('metabolite'))
+
+router.route(`/api/v1/metabolite/:id`).get(getById('metabolite'))
+
+router.route(`/api/v1/metabolite/avg-by-country/:id`).get(async (req, res) => {
     const queryRes = await executeQuery(getAvgValues(req.params.id))
     sendResponseGet(queryRes, res)
 })
 
-router.route('/avg-by-country/:id/:year').get(async (req, res) => {
+router.route(`/api/v1/metabolite/avg-by-country/:id/:year`).get(async (req, res) => {
     const queryRes = await executeQuery(getAvgValues(req.params.id, req.params.year))
     sendResponseGet(queryRes, res)
 })

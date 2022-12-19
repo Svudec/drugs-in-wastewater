@@ -31,7 +31,7 @@ order by measurement_year DESC, metabolite_name, country_name,
          city_name, institution_name, location_population_size DESC, measurement_dayofweek`
 
 
-router.route('/').get(async (req, res) => {
+router.route(`/api/v1/collection`).get(async (req, res) => {
     const queryRes = await executeQuery(getCollection)
     sendResponseGet(queryRes, res)
 })
