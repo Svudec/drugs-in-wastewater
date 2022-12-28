@@ -45,7 +45,8 @@ const generateCsv = `COPY (select year measurement_year,
             geom location_geom,
             population_size location_population_size,
             dayofweek measurement_dayofweek,
-            value measurement_value
+            value measurement_value,
+            me.id measurement_id
             from
                  measurement me
                  join metabolite m on m.id = me.metabolite_id

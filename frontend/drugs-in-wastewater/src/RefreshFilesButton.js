@@ -1,18 +1,18 @@
 import React from "react";
 import { Button } from "antd";
 
-const LogoutButton = () => {
+const RefreshFilesButton = () => {
 
     const refreshFiles = () => {
         fetch('http://localhost:8400/api/v1/collection', {method: 'PUT'})
-        .then(res => res.json().then(parsed => setData(parsed.res)))
+        .then(res => res.json().then(parsed => alert(parsed.message)))
     }
 
   return (
-    <Button onClick={() => logout({ returnTo: window.location.origin })}>
+    <Button onClick={refreshFiles}>
       Osvježi datoteke
     </Button>
   );
 };
 
-export default LogoutButton;
+export default RefreshFilesButton;

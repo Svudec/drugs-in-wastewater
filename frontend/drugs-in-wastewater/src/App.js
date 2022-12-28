@@ -8,6 +8,7 @@ import { CSVLink } from 'react-csv';
 import LoginButton from './LoginButton';
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from './LogoutButton';
+import RefreshFilesButton from './RefreshFilesButton';
 
 const { Title } = Typography;
 
@@ -99,6 +100,7 @@ function App() {
         </Tabs.TabPane>
         <Tabs.TabPane key={3} tab={'Strojno čitljivo'}>
           <div className='content'>
+            {auth.isAuthenticated && <RefreshFilesButton />}
             <a href='http://localhost:8400/collection/drugs-in-wastewater.csv' download>CSV datoteka</a>
             <a href='http://localhost:8400/collection/drugs-in-wastewater.json' download>JSON datoteka</a>
           </div>
