@@ -34,6 +34,8 @@ app.use('/swagger', swaggerUi.serve);
 
 app.get('/open-api', (req, res) => {res.status(200).json(openApiFile)})
 
+//serve collection files
+app.use('/collection', express.static('exported'))
 
 //handle non existant endpoints
 app.use((req, res, next) => {

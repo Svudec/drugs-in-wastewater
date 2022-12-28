@@ -1,4 +1,6 @@
 const Pool = require('pg').Pool
+const copyTo = require('pg-copy-streams').to
+const fs = require('fs')
 
 const pool = new Pool({
     user: 'apps',
@@ -7,6 +9,21 @@ const pool = new Pool({
     password: 'application$_acce$$',
     port: 5432,
 })
+
+const executeQueryCopy = (query, path) =>
+    new Promise((resolve, reject) => {
+        pool.connect((err, client, done) => {
+            if (err) {
+                reject({ message: err.stack })
+            }
+            const file = fs.createWriteStream(path)
+            const stream = client.query(copyTo(query))
+            stream.pipe(file)
+            stream.on('end', r => { done(r), resolve({}) })
+            stream.on('error', r => { done(r), reject({ message: 'Query error!' }) })
+            file.on('error', r => { done(r), reject({ message: "Can't write to path!" }) });
+        })
+    })
 
 const executeQuery = (query, returnOnlyFirst = false) =>
     new Promise((resolve, reject) => {
@@ -91,5 +108,5 @@ const getById = (resource, fromWriteFn = false) => {
 
 
 module.exports = {
-    executeQuery, writeQuery, sendResponseGet, getAll, getById, getByIdQuery
+    executeQuery, executeQueryCopy, writeQuery, sendResponseGet, getAll, getById, getByIdQuery
 }

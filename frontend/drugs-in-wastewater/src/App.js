@@ -5,6 +5,9 @@ import NestedTable from './NestedTable';
 import Fuse from 'fuse.js';
 import About from './About';
 import { CSVLink } from 'react-csv';
+import LoginButton from './LoginButton';
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from './LogoutButton';
 
 const { Title } = Typography;
 
@@ -32,9 +35,10 @@ function App() {
   const [filterSector, setFilterSector] = useState('all')
   const [searchString, setSearchString] = useState('')
   const fuse = useRef(null)
+  const auth = useAuth0();
 
   useEffect(() => {
-    fetch('http://localhost:8400/').then(res => res.json().then(parsed => setData(parsed)))
+    fetch('http://localhost:8400/api/v1/collection').then(res => res.json().then(parsed => setData(parsed.res)))
   }, [])
 
   useEffect(() => {
@@ -70,8 +74,11 @@ function App() {
 
   return (
     <div className="container">
-      <div className='header'>
-        <Title>Prisutnost narkotika u otpadnim vodama nekih europskih gradova</Title>
+      <div className='horizontal-container'>
+        <div className='header'>
+          <Title>Prisutnost narkotika u otpadnim vodama nekih europskih gradova</Title>
+        </div>
+        <div>{auth.isAuthenticated ? <LogoutButton /> : <LoginButton />}</div>
       </div>
       <Tabs defaultActiveKey='1' destroyInactiveTabPane size='big'>
         <Tabs.TabPane key={1} tab='O podacima'>
@@ -91,11 +98,14 @@ function App() {
           </div>
         </Tabs.TabPane>
         <Tabs.TabPane key={3} tab={'Strojno čitljivo'}>
-        <div className='content'>
-          <a href='/drugs-in-wastewater.csv' download>CSV datoteka</a>
-          <a href='/drugs-in-wastewater.json' download>JSON datoteka</a>
-        </div>
+          <div className='content'>
+            <a href='http://localhost:8400/collection/drugs-in-wastewater.csv' download>CSV datoteka</a>
+            <a href='http://localhost:8400/collection/drugs-in-wastewater.json' download>JSON datoteka</a>
+          </div>
         </Tabs.TabPane>
+        {auth.isAuthenticated && <Tabs.TabPane key={4} tab='Korisnički profil'>
+          <div></div>
+        </Tabs.TabPane>}
       </Tabs>
     </div>
   );
