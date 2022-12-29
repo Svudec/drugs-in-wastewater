@@ -106,7 +106,11 @@ function App() {
           </div>
         </Tabs.TabPane>
         {auth.isAuthenticated && <Tabs.TabPane key={4} tab='Korisnički profil'>
-          <div></div>
+          <div className='content'>
+            <span>Email: <strong>{auth.user?.email}</strong></span>
+            <span>Email je potvrđen: <strong>{auth.user?.email_verified ? 'DA' : 'NE'}</strong></span>
+            <span>Vrijeme zadnje izmjene računa: <strong>{auth.user?.updated_at}</strong></span>
+          </div>
         </Tabs.TabPane>}
       </Tabs>
     </div>
