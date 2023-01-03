@@ -35,9 +35,9 @@ const executeQuery = (query, returnOnlyFirst = false, includeSchema = {}) =>
                     result.status = 'error'
                     result.httpStatus = 404
                 } else {
-                    const res = returnOnlyFirst && res.rows.length > 0 ? res.rows[0] : res.rows
+                    const resFinal = returnOnlyFirst && res.rows.length > 0 ? res.rows[0] : res.rows
                     result.status = 'ok'
-                    result.res = res.map(i => ({...includeSchema, ...i}))
+                    result.res = resFinal.map(i => ({...includeSchema, ...i}))
                 }
                 resolve(result)
             })
