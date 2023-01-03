@@ -25,7 +25,7 @@ const executeQueryCopy = (query, path) =>
         })
     })
 
-const executeQuery = (query, returnOnlyFirst = false) =>
+const executeQuery = (query, returnOnlyFirst = false, includeSchema = {}) =>
     new Promise((resolve, reject) => {
         let result = {}
 
@@ -35,8 +35,9 @@ const executeQuery = (query, returnOnlyFirst = false) =>
                     result.status = 'error'
                     result.httpStatus = 404
                 } else {
+                    const res = returnOnlyFirst && res.rows.length > 0 ? res.rows[0] : res.rows
                     result.status = 'ok'
-                    result.res = returnOnlyFirst && res.rows.length > 0 ? res.rows[0] : res.rows
+                    result.res = res.map(i => ({...includeSchema, ...i}))
                 }
                 resolve(result)
             })
@@ -91,16 +92,16 @@ const getByIdQuery = (resource, id) => ({
     text: `select * from ${resource} where id = $1`, values: [id]
 })
 
-const getAll = (resource) => {
+const getAll = (resource, includeSchema = {}) => {
     return async (req, res) => {
-        const queryRes = await executeQuery(getAllQuery(resource))
+        const queryRes = await executeQuery(getAllQuery(resource), false, includeSchema)
         sendResponseGet(queryRes, res)
     }
 }
 
-const getById = (resource, fromWriteFn = false) => {
+const getById = (resource, fromWriteFn = false, includeSchema = {}) => {
     return async (req, res) => {
-        const queryRes = await executeQuery(getByIdQuery(resource, req.params.id), true)
+        const queryRes = await executeQuery(getByIdQuery(resource, req.params.id), true, includeSchema)
         fromWriteFn ? sendResponseWrite(queryRes, res) : sendResponseGet(queryRes, res)
     }
 }
