@@ -109,7 +109,7 @@ function App() {
           <div className='content'>
             <span>Email: <strong>{auth.user?.email}</strong></span>
             <span>Email je potvrđen: <strong>{auth.user?.email_verified ? 'DA' : 'NE'}</strong></span>
-            <span>Vrijeme zadnje izmjene računa: <strong>{auth.user?.updated_at}</strong></span>
+            <span>Vrijeme zadnje prijave: <strong>{auth.user?.updated_at}</strong></span>
           </div>
         </Tabs.TabPane>}
       </Tabs>
